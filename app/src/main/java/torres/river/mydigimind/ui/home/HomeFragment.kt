@@ -16,13 +16,14 @@ import torres.river.mydigimind.ui.Task
 
 class HomeFragment : Fragment() {
 
-    var tasks = ArrayList<Task>()
+
     private var adapter: AdaptadorTareas? = null
 
     private var _binding: FragmentHomeBinding? = null
 
     companion object{
-        
+        var tasks = ArrayList<Task>()
+        var first = true
     }
 
     // This property is only valid between onCreateView and
@@ -40,7 +41,11 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        fillTask()
+        if (first){
+            fillTask()
+            first = false
+        }
+
 
         adapter = AdaptadorTareas(root.context, tasks)
 

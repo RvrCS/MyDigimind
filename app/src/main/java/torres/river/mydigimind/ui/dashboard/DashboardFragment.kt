@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import torres.river.mydigimind.R
 import torres.river.mydigimind.databinding.FragmentDashboardBinding
 import torres.river.mydigimind.ui.Task
+import torres.river.mydigimind.ui.home.HomeFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -85,7 +87,9 @@ class DashboardFragment : Fragment() {
 
             var task = Task(title, days, time)
 
+            HomeFragment.tasks.add(task)
 
+            Toast.makeText(root.context, "New reminder added!", Toast.LENGTH_SHORT).show()
 
         }
 
