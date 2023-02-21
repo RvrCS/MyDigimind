@@ -217,12 +217,16 @@
                 android:layout_marginTop="20dp"
                 />
 
-            <EditText
-                android:id="@+id/time"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/time_btn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-
+                android:text="Set time"
+                android:textAllCaps="false"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:layout_gravity="center"
                 />
 
 
@@ -232,7 +236,8 @@
                 android:backgroundTint="@color/dusty_rose"
                 android:text="@string/button_done"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
                 />
 
 
