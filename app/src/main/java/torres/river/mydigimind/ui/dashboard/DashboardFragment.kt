@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import torres.river.mydigimind.R
 import torres.river.mydigimind.databinding.FragmentDashboardBinding
 import torres.river.mydigimind.ui.Task
@@ -39,6 +41,8 @@ class DashboardFragment : Fragment() {
 
         val timeBtn: Button = root.findViewById(R.id.time_btn)
 
+        var storage = FirebaseFirestore.getInstance()
+
         timeBtn.setOnClickListener {
 
             val cal = Calendar.getInstance()
@@ -66,30 +70,28 @@ class DashboardFragment : Fragment() {
         val checkSaturday = root.findViewById(R.id.saturday) as CheckBox
 
         doneBtn.setOnClickListener {
-            var title = nameTask.text.toString()
-            var time = timeBtn.text.toString()
-            var days = ArrayList<String>()
+            var actividad = hashMapOf(
+                "actividad" to nameTask.text.toString(),
+                "lu" to checkMonday.isChecked,
+                "ma" to checkTuesday.isChecked,
+                "mi" to checkWednesday.isChecked,
+                "ju" to checkThursday.isChecked,
+                "vi" to checkFriday.isChecked,
+                "sa" to checkSaturday.isChecked,
+                "do" to checkSunday.isChecked,
+                "tiempo" to timeBtn.text.toString()
+            )
 
-            if (checkSunday.isChecked)
-                days.add("Sunday")
-            if (checkMonday.isChecked)
-                days.add("Monday")
-            if (checkTuesday.isChecked)
-                days.add("Tuesday")
-            if (checkWednesday.isChecked)
-                days.add("Wednesday")
-            if (checkThursday.isChecked)
-                days.add("Thursday")
-            if (checkFriday.isChecked)
-                days.add("Friday")
-            if (checkSaturday.isChecked)
-                days.add("Saturday")
 
-            var task = Task(title, days, time)
+            storage.collection("actividades").add(actividad).addOnSuccessListener {
+                documentReference -> Toast.makeText(root.context, "New reminder added!", Toast.LENGTH_SHORT).show()
+            }
+                .addOnFailureListener {e ->
+                    Toast.makeText(root.context, "Error adding task.", Toast.LENGTH_SHORT).show()
 
-            HomeFragment.tasks.add(task)
+                }
 
-            Toast.makeText(root.context, "New reminder added!", Toast.LENGTH_SHORT).show()
+
 
         }
 
